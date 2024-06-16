@@ -27,17 +27,17 @@
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             padding: 30px;
-            max-width: 1200px;
+            max-width: 700px;
             width: 100%;
             text-align: center;
             
         }
 
         #titulo {
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 700;
             color: #00adb5;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
 
         fieldset {
@@ -48,7 +48,7 @@
         }
 
         legend {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 600;
             color: #eeeeee;
             background-color: #00adb5;
@@ -59,19 +59,20 @@
 
         label {
             display: block;
-            font-size: 16pt;
+            font-size: 12pt;
             color: #f1f1f1;
-            margin: 15px 0 5px;
+            margin: 15px 0 0px;
         }
 
         select, button {
             width: calc(100% - 30px);
+            height: 35%;
             max-width: 350px;
-            padding: 12px;
+            padding: 5px;
             margin: 15px 0;
             border: 2px solid #00adb5;
             border-radius: 5px;
-            font-size: 16pt;
+            font-size: 12pt;
             background-color: #222831;
             color: #eeeeee;
         }
@@ -88,16 +89,16 @@
         }
 
         table {
-            width: 100%;
+            width: 50%;
             border-collapse: collapse;
             margin: 25px 0;
         }
 
         th, td {
             border: 2px solid #00adb5;
-            padding: 15px;
+            padding: 6px;
             text-align: center;
-            font-size: 12pt;
+            font-size: 10pt;
         }
 
         th {
@@ -111,18 +112,19 @@
             background-color: #ff5722;
             color: #222831;
         }
-       /*
+
         #day{
                 
-                width: 130px;
+                width: 95px;
+                
             }
         #company{
-                width:220px;
+                width:180px;
             }
 
         #category{
-            width:800px;
-        }*/
+            width:300px;
+        }
             
         .button-container {
             display: flex;
@@ -259,12 +261,12 @@
 
         <fieldset>
             <legend id="campo2">Tabla de Calificaciones</legend>
-            
-            <div class="table-container">
+            <!--<div class="table-container">-->
                 <table id="tabla1">
                 <!-- La tabla se llenará dinámicamente con JavaScript -->
                 </table>
-            </div>
+            <!--</div>-->
+            
         </fieldset>
     </div>
 
@@ -571,14 +573,14 @@
                                                     c++;
                                                     stringTabla+=fila;
                                                 }
-                stringTabla+="<tr ><td></td><td></td><td></td><td></td><td></td><td style='font-weight: bold; font-size: 20px;'>";
+                stringTabla+="<tr ><td></td><td></td><td></td><td></td><td></td><td style='font-weight: bold; font-size: 15px;'>";
                 stringTabla+="CALIFICACIÓN: ";
                 }
                 
                 
 
                 
-                stringTabla+="<td style='font-weight: bold; font-size: 20px;'>";
+                stringTabla+="<td style='font-weight: bold; font-size: 15px;'>";
                 stringTabla+=total.toFixed(2);
                 stringTabla+="</td>";
 
