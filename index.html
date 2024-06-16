@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="MobileOptimized" content="width" />
+        <meta name="viewport" content="width=device-width, user-scalable=yes,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+        <title>Puntuaciones</title>
+
+        <style>
+          
+            #scroll-bg{
+                background: rgb(15,15,204);
+                width:100%;
+                margin:10% auto;
+                padding:30px;
+                border-radius:50px;
+            }
+
+            #scroll-div{
+                float:left;
+                width:30px;
+                background:rgb(17,17,105);
+                height:320px;
+                overflow:hidden;
+                overflow-y:scroll;
+            }
+            #scroll-object{
+                color:rgb(17,17,105);
+                font-family:cursive;
+                font-size:15px;
+                padding:20px;
+                
+            }
+            #grafica{
+                float:left;
+            }
+
+            label{
+                display: inline-block;
+                width: 120px;
+            }
+            #campo2{
+                font-size: 15px;
+            }
+
+            #campo{
+                font-size: 15px;
+            }
+
+            #tabla1{
+                background-color: rgb(255, 255, 255);
+            
+            }
+            #category,#company{
+                position: absolute;
+                left: 100px;
+                font-size: 12pt;
+            }
+            #category{
+                width: 278px;
+            }
+            #company{
+                top:120Px;
+            }
+            #day{
+                position: absolute;
+                left: 300px;
+                top:120Px;
+                font-size: 12pt;
+            }
+            #day1{
+                position: absolute;
+                top:120Px;
+                left: 270px;
+                font-size: 12pt;
+            }
+            #titulo{
+                font-size: 10pt;
+            }
+            #compania{
+                position: absolute;
+                top:120px;
+            }
+
+        
+        </style>
+    
+
+    </head>
+    <body style="background-color:#999494;">
+        
+        <!--Config FireBase2 *******************************************************************************-->
+        <script type="module">
+
+           
+
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+                apiKey: "AIzaSyBBPAzWDxh9GeL_rRwueRe1x8wzkahUqlY",
+                authDomain: "tr2024-24dd1.firebaseapp.com",
+                projectId: "tr2024-24dd1",
+                storageBucket: "tr2024-24dd1.appspot.com",
+                messagingSenderId: "993588524959",
+                appId: "1:993588524959:web:859135f17733e8dfd26faa",
+                measurementId: "G-1M1EF74N8B"
+            };
+
+
+          
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+
+            import {getDatabase,ref,set,child,update,remove,get,onValue} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+            const db=getDatabase();
+
+            // lee la base de datos
+            
+            function GetAllDataOnce(){
+
+                
+                const dbRef2=ref(db);
+                get(child(dbRef2,"categoriaName"))
+                .then((snapshot)=>{
+
+                    var categoria2=[];
+                    snapshot.forEach(childSnapshot =>{
+                        categoria2.push(childSnapshot.val());
+                    });
+                    
+                    console.log(categoria2);
+                    var i2=categoria2.length;
+                    console.log(i2);
+                    
+                    for (var i2 = 0; i2 < categoria2.length; i2++) {
+                            console.log(categoria2[i2]);
+                            var option = document.createElement('option');
+                            option.value = categoria2[i2];
+                            option.text = categoria2[i2];
+                            document.getElementById('category').appendChild(option);
+                            document.getElementById('campo').innerText=categoria2[0];
+                           
+                            
+                    }
+                    
+                });
+
+
+                
+
+
+                const dbRef=ref(db);
+                get(child(dbRef,"categorias/30 Salsa Solistas Masculino Kids"))
+                .then((snapshot)=>{
+
+                    var categoria=[];
+                    snapshot.forEach(childSnapshot =>{
+                        categoria.push(childSnapshot.val());
+                    });
+                    
+                    console.log(categoria);
+                    var i=categoria.length;
+                    console.log(i);
+                    
+                    for (var i = 0; i < categoria.length; i++) {
+                            console.log(categoria[i]);
+                            var option = document.createElement('option');
+                            option.value = categoria[i];
+                            option.text = categoria[i];
+                            document.getElementById('company').appendChild(option);
+                    }
+                });
+
+
+        
+               
+    
+                
+            }
+            window.onload=GetAllDataOnce;
+            //------------------- lee la base de datos
+
+
+
+            //--------------Selecciona la categoría--------------------
+            function seleccionarCategoria(){
+                let cadenaCategoria;
+                if(day.value=="sabado")
+                    cadenaCategoria="categorias/"
+                else
+                    cadenaCategoria="categoriasV/"
+                
+
+                let categoriaSel=document.getElementById('category');
+                let competidorSel=document.getElementById('company');
+                let categoriaSeleccionada=categoriaSel.value;
+                let competidorSeleccionado=competidorSel.value;
+                document.getElementById('campo').innerText=categoriaSeleccionada;
+                document.getElementById('campo2').innerText=categoriaSeleccionada+"  "+competidorSeleccionado;
+
+                limpiarCompania();
+                const dbRef=ref(db);
+                get(child(dbRef,cadenaCategoria+categoriaSeleccionada))
+                .then((snapshot)=>{
+
+                    var categoria=[];
+                    snapshot.forEach(childSnapshot =>{
+                        categoria.push(childSnapshot.val());
+                    });
+                    
+                    console.log(categoria);
+                    var i=categoria.length;
+                    console.log(i);
+                    
+                    for (var i = 0; i < categoria.length; i++) {
+                            console.log(categoria[i]);
+                            var option = document.createElement('option');
+                            option.value = categoria[i];
+                            option.text = categoria[i];
+                            document.getElementById('company').appendChild(option);
+                    }
+                });
+
+
+
+                
+            }
+            category.addEventListener('change',seleccionarCategoria);
+
+           
+
+            //-------------limpiar datos select
+            const limpiarCompania = () => {
+                for (let i = company.length; i >= 0; i--) {
+                company.remove(i);
+            }
+            };
+
+
+            //--------------------Evento Mostrar Calificaciones Finales-------
+            botonCalificacionesFinales.addEventListener('click',MostrarCalifcaciones);
+            company.addEventListener('click',MostrarCalifcaciones);
+         
+        
+
+            function MostrarCalifcaciones(){
+                
+
+                let categoriaSel=document.getElementById('category');
+                let competidorSel=document.getElementById('company');
+                let categoriaSeleccionada=categoriaSel.value;
+                let competidorSeleccionado=competidorSel.value;
+                document.getElementById('campo').innerText=categoriaSeleccionada;
+                document.getElementById('campo2').innerText=categoriaSeleccionada+"  "+competidorSeleccionado;
+                let cadenaCalificaciones
+                if (day.value=="sabado")
+                    cadenaCalificaciones="calificacionesSabado/";
+                else
+                    cadenaCalificaciones="calificacionesViernes/";
+                
+                const dbRef=ref(db);
+                get(child(dbRef,cadenaCalificaciones+category.value+"/"+company.value))
+                .then((snapshot)=>{
+
+                    
+                    
+                    
+                    var jueces=[];
+                    
+                    snapshot.forEach(childSnapshot =>{
+                        jueces.push(childSnapshot.val());
+                    });
+                    
+                    var i2=jueces.length;
+        
+        
+                    let stringTabla;
+                    let juecesArray=[];
+                    
+                    for(var j=0;j<jueces.length;j++){
+                        juecesArray[j]=jueces[j].a_juez;
+                    }
+                    
+                    var c=0;
+                    var total=0;
+                    let fila="";
+                    if(categoriaSel.value=="55 Casino Parejas Abierto"||categoriaSel.value=="56 Casino Grupos Rueda Abierta"){
+                            console.log("Casino");
+                            stringTabla="<tr> <th>Juez</th> <th>Tiempo</th> <th>Técnica</th> <th>Musicalidad</th> <th>Dificultad</th> <th>Coreografía</th> <th>Coordinación</th> <th>Presencia</th> <th>Cubania</th> <th>CALIFICACIÓN</th></tr>";
+                            for (let i of jueces){
+                                                    fila="<tr><td>";
+                                                    fila+=juecesArray[c];
+                                                    fila+="</td>";
+                                                    
+                                                    fila+="<td>";
+                                                    fila+=i.b_tiempo;
+                                                    fila+="</td>";
+                                                    
+
+                                                    fila+="<td>";
+                                                    fila+=i.c_tecnica;
+                                                    fila+="</td>";
+
+                                                    fila+="<td>";
+                                                    fila+=i.d_Musicalidad;
+                                                    fila+="</td>";
+
+                                                    fila+="<td>";
+                                                    fila+=i.f_dificultad;
+                                                    fila+="</td>";
+
+                                                    fila+="<td>";
+                                                    fila+=i.g_coreografia;
+                                                    fila+="</td>";
+
+                                                    fila+="<td>";
+                                                    fila+=i.gg_coordinacion;
+                                                    fila+="</td>";
+
+                                                    fila+="<td>";
+                                                    fila+=i.ggg_presencia;
+                                                    fila+="</td>";
+
+                                                    fila+="<td>";
+                                                    fila+=i.gggg_cubania;
+                                                    fila+="</td>";
+
+                                                    fila+="<td>";
+                                                    fila+=i.h_calificacion;
+                                                    fila+="</td>";
+
+                                                    total+=Number.parseFloat(i.h_calificacion);
+
+                                                    fila+="</tr>";
+                                                    c++;
+                                                    stringTabla+=fila;
+                                                }
+                    stringTabla+="<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>";
+                    stringTabla+="CALIFICACIÓN: ";
+
+                }
+                    else{    
+                            stringTabla="<tr> <th>Juez</th> <th>Tiempo</th> <th>Coreografía</th> <th>proyección</th> <th>Dificultad / Originalidad</th> <th>Presentación Visual</th> <th>CALIFICACIÓN</th></tr>";
+                            console.log("no Casino");
+                            for (let i of jueces){
+                                                        fila="<tr><td>";
+                                                        fila+=juecesArray[c];
+                                                        fila+="</td>";
+                                                        
+                                                        fila+="<td>";
+                                                        fila+=i.b_tiempo;
+                                                        fila+="</td>";
+                                                        
+
+                                                        fila+="<td>";
+                                                        fila+=i.c_coreografia;
+                                                        fila+="</td>";
+
+                                                        fila+="<td>";
+                                                        fila+=i.d_proyeccion;
+                                                        fila+="</td>";
+
+                                                        fila+="<td>";
+                                                        fila+=i.f_dificultad_originalidad;
+                                                        fila+="</td>";
+
+                                                        fila+="<td>";
+                                                        fila+=i.g_presentacion_visual;
+                                                        fila+="</td>";
+
+                                                        fila+="<td>";
+                                                        fila+=i.h_calificacion;
+                                                        fila+="</td>";
+                                                        /*    
+                                                        fila+="<td>";
+                                                        fila+=i.notas;
+                                                        fila+="</td>";*/
+
+                                                        total+=Number.parseFloat(i.h_calificacion);
+
+                                                        fila+="</tr>";
+                                                        c++;
+                                                        stringTabla+=fila;
+                                                    }
+                    stringTabla+="<tr><td></td><td></td><td></td><td></td><td></td><td>";
+                    stringTabla+="CALIFICACIÓN: ";
+                    }
+                    
+                    
+  
+                    
+                    stringTabla+="<td>";
+                    stringTabla+=total.toFixed(2);
+                    stringTabla+="</td>";
+
+                    stringTabla+="</tr>";
+                    document.getElementById("tabla1").innerHTML=stringTabla;
+
+                    
+                });
+
+
+            }
+
+            //--------------------Evento Mostrar lugares-------------------------
+            botonPosiciones.addEventListener('click',MostrarPosiciones);
+            category.addEventListener('click',MostrarPosiciones)
+            category.addEventListener('selectionchange',MostrarPosiciones)
+            function MostrarPosiciones(){
+                let categoriaSel=document.getElementById('category');
+                let competidorSel=document.getElementById('company');
+                let categoriaSeleccionada=categoriaSel.value;
+                let competidorSeleccionado=competidorSel.value;
+                document.getElementById('campo').innerText=categoriaSeleccionada;
+                document.getElementById('campo2').innerText=categoriaSeleccionada;
+                let cadenaCalificaciones
+                if (day.value=="sabado")
+                    cadenaCalificaciones="calificacionesSabado/";
+                else
+                    cadenaCalificaciones="calificacionesViernes/";
+                
+                const dbRef=ref(db);
+                get(child(dbRef,cadenaCalificaciones+category.value+"/0 Posiciones")).then((snapshot)=>{
+
+                    var lugares=[];
+                    
+                    snapshot.forEach(childSnapshot =>{
+                        lugares.push(childSnapshot.val());
+                    });
+                    
+                    console.log(lugares);
+                   
+                    
+                    let stringTabla=" <tr> <th>Posición</th> <th>Competidor</th> <th>Puntuación</th></tr>";
+                    let fila="";
+                    var cont=0;
+                    var arreLugares=[];
+                    var nombreLugares=[];
+                    for (let i of lugares){
+                        arreLugares[cont]=i.z_Pos;
+                        nombreLugares[cont]=i.nombre;
+                        cont++;
+                        
+                    }
+                    cont=0;
+                    for(var j=lugares.length-1;j>=0;j--){
+                        cont++;
+                        
+                        if(cont<6){
+                            fila+="<td style='background-color: lightgreen;'>";
+                            fila+=cont;  
+                            fila+="<td style='background-color: lightgreen;'>";
+                            fila+=nombreLugares[j];  
+                            fila+="<td style='background-color: lightgreen;'>";  
+                            fila+=arreLugares[j];
+                            fila+="</tr>";
+
+                        }
+                        else{
+                            fila+="<td>";
+                            fila+=cont;  
+                            fila+="<td>";
+                            fila+=nombreLugares[j];  
+                            fila+="<td>";  
+                            fila+=arreLugares[j];
+                            fila+="</tr>"; 
+
+                        }
+                        
+                    }
+                    stringTabla+=fila;
+                    document.getElementById("tabla1").innerHTML=stringTabla;
+                    
+                });
+
+            }
+
+            //--------------------Evento Mostrar lugares----------------------
+
+            //------------------Evento Día (Day)------------------------------
+            day.addEventListener('change',cambioDia);
+            function cambioDia(){
+                console.log(day.value);
+                for (let i = category.options.length; i >= 0; i--) {
+                    category.remove(i);
+                }
+                for (let i = company.options.length; i >= 0; i--) {
+                    company.remove(i);
+                
+                }
+
+                if(day.value=="sabado")
+                    GetAllDataOnce();
+                else
+                    baseDatosViernes();
+            }
+            //------------------Evento Día (Day)------------------------------
+            
+            //-------------------Función Base de datos Viernes------------------------
+            function baseDatosViernes(){
+                const dbRef5=ref(db);
+                get(child(dbRef5,"categoriasNameV"))
+                .then((snapshot)=>{
+
+                    var categoria2=[];
+                    snapshot.forEach(childSnapshot =>{
+                        categoria2.push(childSnapshot.val());
+                    });
+                    
+                    console.log(categoria2);
+                    var i2=categoria2.length;
+                    console.log(i2);
+                    
+                    for (var i2 = 0; i2 < categoria2.length; i2++) {
+                            console.log(categoria2[i2]);
+                            var option = document.createElement('option');
+                            option.value = categoria2[i2];
+                            option.text = categoria2[i2];
+                            document.getElementById('category').appendChild(option);
+                            document.getElementById('campo').innerText=categoria2[0];
+                           
+                            
+                    }
+                    
+                });
+
+
+                
+
+                const dbRef4=ref(db);
+                get(child(dbRef4,"categoriasV/0 Bachata Prueba"))
+                .then((snapshot)=>{
+
+                    var categoria=[];
+                    snapshot.forEach(childSnapshot =>{
+                        categoria.push(childSnapshot.val());
+                    });
+                    
+                    console.log(categoria);
+                    var i=categoria.length;
+                    console.log(i);
+                    
+                    for (var i = 0; i < categoria.length; i++) {
+                            console.log(categoria[i]);
+                            var option = document.createElement('option');
+                            option.value = categoria[i];
+                            option.text = categoria[i];
+                            document.getElementById('company').appendChild(option);
+                    }
+                });
+
+
+            }
+            //----------------------------------------------------------------
+
+
+            //--------------------Imprime 5 rubros--------------
+         
+            //--------------------Imprime rubros Casino---------
+
+
+          </script>
+
+
+
+
+        <div class="contenedor">
+        
+                        <p id="titulo">Tremendo Rumbón 2024</p>
+
+
+                        <fieldset>
+                            <br>
+                            
+                            <legend id="campo">--</legend>
+
+                            <label for="category" style="height:68px;width:168px;font-size: 12pt; ">Categoría:</label>
+                            <select name="category" id="category">
+                            </select> 
+
+                            <br>
+
+                            <label id="compania" style="height:68px;width:150px;font-size: 12pt; ">Compañía:</label>
+                            <select name="company" id="company" > 
+                            </select> 
+
+                            <label id="day1" style="height:68px;width:178px;font-size: 12pt; ">Día:</label>
+                            <select name="day" id="day"style="font-size: 12pt;" > 
+                                <option value="sabado">Sábado</option>
+                                <option value="viernes" >Viernes</option>
+                            </select>
+                            
+                            
+                            <br>
+
+                            <button id="botonCalificacionesFinales" style="height:48px;width:150px;font-size: 12pt; "> Mostrar Calificaciones </button>
+                            <button id="botonPosiciones" style="height:48px;width:150px;font-size: 12pt; "> Mostrar Posiciones</button>
+
+
+                            <p id="datosJueces"></p>
+                        </fieldset>
+                        
+                        <fieldset>
+                            <br>
+                            <legend id="campo2">Tabla Calificaciones</legend>
+                            <table id="tabla1" border="1" style="font-size: 12pt;">
+                            </table>
+                            
+                        </fieldset>   
+
+        </div>
+       
+    </body>
+</html>
