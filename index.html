@@ -166,7 +166,21 @@
             /*margin-bottom: 15px; /* Espacio inferior para cada grupo */
         }
 
-       
+        .table-container {
+            width: 100%; /* Ocupa todo el ancho del contenedor padre */
+            overflow-x: auto; /* Desplazamiento horizontal */
+            overflow-y: auto; /* Desplazamiento vertical */
+            max-height: 400px; /* Altura máxima del contenedor */
+            border: 1px solid #ddd; /* Borde opcional para visualización */
+            padding: 10px;
+            box-sizing: border-box; /* Incluye padding y borde en el tamaño */
+        }
+
+        table {
+            width: 100%;
+            table-layout: auto; /* Ajuste automático según el contenido */
+            border-collapse: collapse; /* Bordes colapsados para mejor estilo */
+        }
 
         
       /*
