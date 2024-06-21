@@ -2,9 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=0.5,user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=yes">
     <title>Puntuaciones</title>
 
     <style>
@@ -30,7 +30,7 @@
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             padding: 30px;
-            max-width: 700px;
+            max-width: 800px;
             width: 100%;
             text-align: center;
             
@@ -534,7 +534,7 @@
 
             }
                 else{    
-                        stringTabla="<tr> <th>Juez</th> <th>Tiempo</th> <th>Coreografía</th> <th>proyección</th> <th>Dificultad / Originalidad</th> <th>Presentación Visual</th> <th>CALIFICACIÓN</th></tr>";
+                        stringTabla="<tr> <th>Juez</th> <th>Tiempo</th> <th>Técnica</th> <th>Coreografía</th> <th>Proyección</th> <th>Presentación Visual</th> <th>Dificultad</th> <th>CALIFICACIÓN</th></tr>";
                         console.log("no Casino");
                         for (let i of jueces){
                                                     fila="<tr><td>";
@@ -547,19 +547,23 @@
                                                     
 
                                                     fila+="<td>";
-                                                    fila+=i.c_coreografia;
+                                                    fila+=i.c_tecnica;
                                                     fila+="</td>";
 
                                                     fila+="<td>";
-                                                    fila+=i.d_proyeccion;
+                                                    fila+=i.d_coreografia;
                                                     fila+="</td>";
 
                                                     fila+="<td>";
-                                                    fila+=i.f_dificultad_originalidad;
+                                                    fila+=i.e_proyeccion_escenica;
                                                     fila+="</td>";
 
                                                     fila+="<td>";
-                                                    fila+=i.g_presentacion_visual;
+                                                    fila+=i.f_presentacion_visual;
+                                                    fila+="</td>";
+
+                                                    fila+="<td>";
+                                                    fila+=i.g_dificultad_sincro;
                                                     fila+="</td>";
 
                                                     fila+="<td>";
@@ -576,7 +580,7 @@
                                                     c++;
                                                     stringTabla+=fila;
                                                 }
-                stringTabla+="<tr ><td></td><td></td><td></td><td></td><td></td><td style='font-weight: bold; font-size: 15px;'>";
+                stringTabla+="<tr ><td></td><td></td><td></td><td></td><td></td><td></td><td style='font-weight: bold; font-size: 15px;'>";
                 stringTabla+="CALIFICACIÓN: ";
                 }
                 
