@@ -120,6 +120,7 @@
                 
                 width: 95px;
                 
+                
             }
         #company{
                 width:180px;
@@ -148,6 +149,7 @@
 
         .cat-container,.company-container,.day-container {
             padding: 1% 3%;
+          
         }
 
         .cat-container {
@@ -171,7 +173,9 @@
             flex-direction: column; /* Apila los elementos en columna */
             align-items: flex-start; /* Alinea al inicio horizontalmente */
             /*margin-bottom: 15px; /* Espacio inferior para cada grupo */
+           
         }
+        
 
         .table-container {
             width: 100%; /* Ocupa todo el ancho del contenedor padre */
@@ -202,26 +206,7 @@
             }
         }*/
 
-                /* Estilo para dispositivos grandes (escritorios) */
-        @media (min-width: 992px) {
-            .container {
-                width: 70%;
-            }
-        }
-
-        /* Estilo para tablets (tamaño mediano) */
-        @media (min-width: 768px) and (max-width: 991px) {
-            .container {
-                width: 85%;
-            }
-        }
-
-        /* Estilo para dispositivos móviles (pantallas pequeñas) */
-        @media (max-width: 767px) {
-            .container {
-                width: 95%;
-            }
-        }
+   
 
 
     </style>
@@ -246,8 +231,8 @@
                 <div class="day-container">
                     <label for="day">Día:</label>
                     <select id="day">
-                        <option value="sabado">Sábado</option>
-                        <option value="viernes">Viernes</option>
+                        <option class=opDia value="sabado">Sábado</option>
+                        <option class=opDia value="viernes">Viernes</option>
                     </select>
 
                 </div>
@@ -478,45 +463,37 @@
                 var c=0;
                 var total=0;
                 let fila="";
-                if(categoriaSel.value=="55 Casino Parejas Abierto"||categoriaSel.value=="56 Casino Grupos Rueda Abierta"){
+                if(categoriaSel.value=="0 Bachata Prueba"||categoriaSel.value=="10 Free Style Showcase"){
                         console.log("Casino");
-                        stringTabla="<tr> <th>Juez</th> <th>Tiempo</th> <th>Técnica</th> <th>Musicalidad</th> <th>Dificultad</th> <th>Coreografía</th> <th>Coordinación</th> <th>Presencia</th> <th>Cubania</th> <th>CALIFICACIÓN</th></tr>";
+                        stringTabla="<tr> <th>Juez</th> <th>Coreografía</th> <th>Proyección</th> <th>Técnica</th> <th>Dificultad</th> <th>Espectáculo</th> <th>Efecto Total</th>   <th>CALIFICACIÓN</th></tr>";
                         for (let i of jueces){
                                                 fila="<tr><td>";
                                                 fila+=juecesArray[c];
                                                 fila+="</td>";
                                                 
                                                 fila+="<td>";
-                                                fila+=i.b_tiempo;
+                                                fila+=i.b_coreografia_m;
                                                 fila+="</td>";
                                                 
 
                                                 fila+="<td>";
-                                                fila+=i.c_tecnica;
+                                                fila+=i.c_proyección_e;
                                                 fila+="</td>";
 
                                                 fila+="<td>";
-                                                fila+=i.d_Musicalidad;
+                                                fila+=i.d_tecnica_g;
                                                 fila+="</td>";
 
                                                 fila+="<td>";
-                                                fila+=i.f_dificultad;
+                                                fila+=i.e_dificultad_s;
                                                 fila+="</td>";
 
                                                 fila+="<td>";
-                                                fila+=i.g_coreografia;
+                                                fila+=i.f_espectaculo;
                                                 fila+="</td>";
 
                                                 fila+="<td>";
-                                                fila+=i.gg_coordinacion;
-                                                fila+="</td>";
-
-                                                fila+="<td>";
-                                                fila+=i.ggg_presencia;
-                                                fila+="</td>";
-
-                                                fila+="<td>";
-                                                fila+=i.gggg_cubania;
+                                                fila+=i.g_efecto_total;
                                                 fila+="</td>";
 
                                                 fila+="<td>";
@@ -529,7 +506,7 @@
                                                 c++;
                                                 stringTabla+=fila;
                                             }
-                stringTabla+="<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>";
+                stringTabla+="<tr><td></td><td></td><td></td><td></td><td></td><td></td><td>";
                 stringTabla+="CALIFICACIÓN: ";
 
             }
