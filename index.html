@@ -324,7 +324,7 @@
 
 
             const dbRef=ref(db);
-            get(child(dbRef,"categorias/1 TEAM TEEN SHOW START"))
+            get(child(dbRef,"categorias/1 TEAM TEEN SHOW STAR"))
             .then((snapshot)=>{
 
                 var categoria=[];
@@ -463,9 +463,65 @@
                 var c=0;
                 var total=0;
                 let fila="";
-                if(categoriaSel.value=="0 Bachata Prueba"||categoriaSel.value=="10 Free Style Showcase"){
+                if(categoriaSel.value=="20 Casino Parejas Novel"||categoriaSel.value=="21 Casino Parejas Amateur"||categoriaSel.value=="22 Casino Parejas Abierta"){
                         console.log("Casino");
-                        stringTabla="<tr> <th>Juez</th> <th>Coreografía</th> <th>Proyección</th> <th>Técnica</th> <th>Dificultad</th> <th>Espectáculo</th> <th>Efecto Total</th>   <th>CALIFICACIÓN</th></tr>";
+                        stringTabla="<tr> <th>Juez</th> <th>Tiempo</th> <th>Técnica</th> <th>Musicalidad</th> <th>Dificultad</th> <th>Coreografía-Originalidad</th> <th>Interacción-Coordinación</th>  <th>Presentación Visual</th> <th>Cubanía</th><th>CALIFICACIÓN</th></tr>";
+                        for (let i of jueces){
+                                                fila="<tr><td>";
+                                                fila+=juecesArray[c];
+                                                fila+="</td>";
+                                                
+                                                fila+="<td>";
+                                                fila+=i.b_tiempo;
+                                                fila+="</td>";
+                                                
+
+                                                fila+="<td>";
+                                                fila+=i.c_tecnica;
+                                                fila+="</td>";
+
+                                                fila+="<td>";
+                                                fila+=i.d_musicalidad;
+                                                fila+="</td>";
+
+                                                fila+="<td>";
+                                                fila+=i.e_dificultad;
+                                                fila+="</td>";
+
+                                                fila+="<td>";
+                                                fila+=i.f_coregrafia_originalidad;
+                                                fila+="</td>";
+
+                                                fila+="<td>";
+                                                fila+=i.g_interaccion_coordinacion;
+                                                fila+="</td>";
+
+                                                fila+="<td>";
+                                                fila+=i.h_presencia_visual;
+                                                fila+="</td>";
+
+                                                fila+="<td>";
+                                                fila+=i.i_cubania;
+                                                fila+="</td>";
+
+                                                fila+="<td>";
+                                                fila+=i.j_calificacion;
+                                                fila+="</td>";
+
+                                                total+=Number.parseFloat(i.j_calificacion);
+
+                                                fila+="</tr>";
+                                                c++;
+                                                stringTabla+=fila;
+                                            }
+                stringTabla+="<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>";
+                stringTabla+="CALIFICACIÓN: ";
+
+            }
+
+            else if(categoriaSel.value=="9 FREE STYLE SHOWCASE"){
+                        
+                        stringTabla="<tr> <th>Juez</th> <th>Coreografía Musicalidad</th> <th>Proyección</th> <th>Técnica</th> <th>Dificultad</th> <th>Espectáculo</th> <th>Efecto Total</th>  <th>CALIFICACIÓN</th></tr>";
                         for (let i of jueces){
                                                 fila="<tr><td>";
                                                 fila+=juecesArray[c];
@@ -500,6 +556,7 @@
                                                 fila+=i.h_calificacion;
                                                 fila+="</td>";
 
+
                                                 total+=Number.parseFloat(i.h_calificacion);
 
                                                 fila+="</tr>";
@@ -510,6 +567,8 @@
                 stringTabla+="CALIFICACIÓN: ";
 
             }
+
+
                 else{    
                         stringTabla="<tr> <th>Juez</th> <th>Tiempo</th> <th>Técnica</th> <th>Coreografía</th> <th>Proyección</th> <th>Presentación Visual</th> <th>Dificultad</th> <th>CALIFICACIÓN</th></tr>";
                         console.log("no Casino");
